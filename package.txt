@@ -1,0 +1,14 @@
+express - framework
+dotenv - manage Environment variable
+nodemon - Run server continuously
+mongoose - framework for Mongodb
+uuidv1 - for generating unique id
+body-parser - for getting json data as middleware
+cookie-parser - for getting json data as middleware
+morgan - for getiing (req type,router) details in console
+express-validator - validate req data v-5.3.1
+jsonwentoken - use to geneate signed token
+express-jwt - use for authorization check
+formidable - use to manage Form type data
+lodash - use to extend new data with existing data
+cors - unable node/express api anywhere
