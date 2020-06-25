@@ -51,10 +51,10 @@ app.use("/api/chatbot", botRoutes);
 const port = process.env.PORT || 5000;
 
 if(process.env.NODE_ENV === 'production') {
-  app.use(express.static( './frontend/build' ))
+  app.use(express.static( 'frontend/build' ))
 
   app.get('*',(req,res) => {
-    res.sendFile(path.join('./frontend','build','index.html')) // relative path
+    res.sendFile(path.join(__dirname,'frontend','build','index.html')) // relative path
   })
   
 
