@@ -7,15 +7,17 @@ const {
 const Product = require("../models/product");
 
 exports.productById = (req, res, next, id) => {
-  Product.findById(id).exec((err, product) => {
-    if (err || !product) {
-      return res.status(400).json({
-        error: "Product not found",
-      });
-    }
-    req.product = product;
-    next();
-  });
+  Product.findById(id)
+    .populate("category")
+    .exec((err, product) => {
+      if (err || !product) {
+        return res.status(400).json({
+          error: "Product not found",
+        });
+      }
+      req.product = product;
+      next();
+    });
 };
 
 exports.getOneProduct = (req, res) => {
@@ -117,29 +119,6 @@ exports.update = (req, res) => {
     if (err) {
       return res.status(400).json({
         error: "Image could not be uploaded",
-      });
-    }
-
-    // check for all fields
-    const {
-      name,
-      description,
-      price,
-      category,
-      quantity,
-      shipping,
-    } = fields;
-
-    if (
-      !name ||
-      !description ||
-      !price ||
-      !category ||
-      !quantity ||
-      !shipping
-    ) {
-      return res.status(400).json({
-        error: "All fields are required",
       });
     }
 
@@ -308,4 +287,29 @@ exports.getPhoto = (req, res, next) => {
     return res.send(req.product.photo.data);
   }
   next();
+};
+
+exports.descreaseQuantity = (req, res, next) => {
+  let bulkOps = req.body.order.products.map((item) => {
+    return {
+      updateOne: {
+        filter: { _id: item._id },
+        update: {
+          $inc: {
+            quantity: -item.count,
+            sold: +item.count,
+          },
+        },
+      },
+    };
+  });
+
+  Product.bulkWrite(bulkOps, {}, (err, products) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Could not update product",
+      });
+    }
+    next();
+  });
 };

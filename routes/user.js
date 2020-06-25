@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   sendUserData,
   update,
+  purchaseHistory,
 } = require("../controllers/user");
 const {
   isAdmin,
@@ -12,5 +13,6 @@ const {
 
 router.get("/", isAuth, sendUserData);
 router.put("/", isAuth, update);
+router.get("/history", isAuth, purchaseHistory);
 
 module.exports = router;

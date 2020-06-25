@@ -12,3 +12,10 @@ express-jwt - use for authorization check
 formidable - use to manage Form type data
 lodash - use to extend new data with existing data
 cors - unable node/express api anywhere
+braintree - payment method api
+sendgrid - send mail to buyer and admin
+
+// Dialogflow bot
+actions-on-google 
+dialogflow 
+dialogflow-fulfillment
